@@ -1,243 +1,720 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jhon Mark Egos - Portfolio</title>
-    <link rel="icon" href="picture.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jhon Mark Egos — Software Developer</title>
+  <meta name="description" content="Jhon Mark Egos — software developer at ActiveSystems Software Inc., building with Delphi, MySQL and Laravel, and AI-assisted development with Claude Code.">
+  <link rel="icon" href="picture.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f4f0;
+      --surface: #ffffff;
+      --surface-2: #efece6;
+      --ink: #16141a;
+      --ink-2: #4a4650;
+      --ink-3: #8a858f;
+      --line: #e2ded6;
+      --accent: #5b2d63;
+      --accent-soft: #efe4f1;
+      --ok: #2f7d4f;
+      --shadow: 0 1px 2px rgba(22,20,26,.04), 0 12px 32px -12px rgba(22,20,26,.12);
+      --radius: 18px;
+      --max: 1160px;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Geist", system-ui, -apple-system, Segoe UI, sans-serif;
+      --mono: "Geist Mono", ui-monospace, Consolas, monospace;
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f0e11;
+      --surface: #17151a;
+      --surface-2: #1e1c22;
+      --ink: #f2eff4;
+      --ink-2: #b9b3bf;
+      --ink-3: #7c7682;
+      --line: #2a272f;
+      --accent: #c9a2d1;
+      --accent-soft: #2a2030;
+      --ok: #6fcf97;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f0e11; --surface: #17151a; --surface-2: #1e1c22;
+        --ink: #f2eff4; --ink-2: #b9b3bf; --ink-3: #7c7682; --line: #2a272f;
+        --accent: #c9a2d1; --accent-soft: #2a2030; --ok: #6fcf97;
+        --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.6);
+      }
+    }
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: var(--sans); font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    @media (max-width: 600px) { .wrap { padding: 0 16px; } }
 
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px);
+      border-bottom: 1px solid transparent; transition: border-color .2s;
+    }
+    .nav.scrolled { border-bottom-color: var(--line); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px; background: var(--ink); color: var(--bg);
+      display: grid; place-items: center; font-family: var(--serif); font-size: 18px; font-style: italic;
+    }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      font-size: 14px; color: var(--ink-2); padding: 8px 12px; border-radius: 999px; transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--surface-2); }
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+      color: var(--ink); display: grid; place-items: center; cursor: pointer;
+    }
+    .icon-btn svg { width: 17px; height: 17px; }
+    .menu-btn { display: none; }
 
-    <link rel="stylesheet" href="style.css">
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;
+      padding: 11px 18px; border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg);
+      transition: transform .15s, opacity .15s; cursor: pointer; font-family: inherit;
+    }
+    .btn:hover { transform: translateY(-1px); opacity: .92; }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn.ghost:hover { border-color: var(--ink-3); }
+    .btn svg { width: 16px; height: 16px; }
+    .btn.sm { padding: 8px 14px; }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        position: fixed; inset: 68px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
+        background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 16px 16px;
+        transform: translateY(-8px); opacity: 0; pointer-events: none; transition: .2s;
+      }
+      .nav-links.open { transform: none; opacity: 1; pointer-events: auto; }
+      .nav-links a { padding: 14px 8px; border-radius: 10px; font-size: 16px; }
+      .menu-btn { display: grid; }
+      .nav-actions .btn { display: none; }
+    }
+
+    /* ---------- Shared ---------- */
+    section { padding: 112px 0; }
+    @media (max-width: 700px) { section { padding: 72px 0; } }
+    .eyebrow {
+      font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow::before { content: ""; width: 18px; height: 1px; background: currentColor; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+    h2.title {
+      font-family: var(--serif); font-weight: 400; font-size: clamp(38px, 5vw, 60px); line-height: 1.02;
+      letter-spacing: -.02em; margin: 14px 0 0;
+    }
+    h2.title em { color: var(--accent); }
+    .lede { color: var(--ink-2); max-width: 46ch; margin: 0; }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 72px 0 96px; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 64px; align-items: center; }
+    .status {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2);
+      padding: 6px 12px 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 20%, transparent); }
+    .hero h1 {
+      font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 7.4vw, 96px); line-height: .98;
+      letter-spacing: -.035em; margin: 26px 0 24px;
+    }
+    .hero h1 em { color: var(--accent); }
+    .hero p.intro { font-size: 18px; color: var(--ink-2); max-width: 52ch; margin: 0 0 32px; }
+    .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-meta { display: flex; gap: 32px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+    .hero-meta div { font-size: 13px; color: var(--ink-3); }
+    .hero-meta strong { display: block; font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+
+    .portrait { position: relative; }
+    .portrait-frame {
+      aspect-ratio: 4/5; border-radius: 28px; overflow: hidden; background: linear-gradient(160deg, var(--accent-soft), var(--surface-2));
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; mix-blend-mode: multiply; }
+    :root[data-theme="dark"] .portrait-frame img { mix-blend-mode: normal; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .portrait-frame img { mix-blend-mode: normal; } }
+    .float-card {
+      position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+      padding: 12px 14px; box-shadow: var(--shadow); font-size: 13px; display: flex; gap: 10px; align-items: center;
+    }
+    .float-card .ic { width: 32px; height: 32px; border-radius: 9px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+    .float-card .ic svg { width: 16px; height: 16px; }
+    .float-card b { display: block; font-weight: 600; font-size: 13px; }
+    .float-card span { color: var(--ink-3); font-size: 12px; }
+    .fc-1 { left: -36px; bottom: 56px; }
+    .fc-2 { right: -24px; top: 36px; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .portrait { max-width: 380px; order: -1; }
+      .fc-1 { left: -8px; } .fc-2 { right: -8px; }
+    }
+
+    /* ---------- Stack marquee ---------- */
+    .stack { border-block: 1px solid var(--line); padding: 22px 0; overflow: hidden; }
+    .stack-track { display: flex; gap: 56px; width: max-content; animation: scroll 32s linear infinite; }
+    .stack-track span { font-family: var(--mono); font-size: 14px; color: var(--ink-2); white-space: nowrap; display: flex; align-items: center; gap: 56px; }
+    .stack-track span::after { content: "✦"; color: var(--ink-3); font-size: 10px; }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .stack-track { animation: none; flex-wrap: wrap; width: auto; } }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; }
+    .about-body p { font-size: 19px; color: var(--ink-2); margin: 0 0 20px; }
+    .about-body p:first-child { font-size: 22px; color: var(--ink); line-height: 1.5; }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; }
+    .fact { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .fact .k { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+    .fact .v { margin-top: 8px; font-weight: 500; line-height: 1.4; }
+    .fact .v small { display: block; font-weight: 400; color: var(--ink-3); font-size: 14px; margin-top: 2px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .chip { font-size: 13px; padding: 5px 11px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+    @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 24px; } }
+    @media (max-width: 520px) { .facts { grid-template-columns: 1fr; } }
+
+    /* ---------- Experience ---------- */
+    .xp { display: grid; grid-template-columns: 280px 1fr; gap: 56px; border-top: 1px solid var(--line); padding-top: 40px; }
+    .xp-side .when { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+    .xp-side .co { font-size: 22px; font-weight: 600; letter-spacing: -.01em; margin: 10px 0 4px; line-height: 1.25; }
+    .xp-side .role { color: var(--ink-2); }
+    .xp-side .now { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 13px; color: var(--ink-2); }
+    .xp-main > p { font-size: 19px; color: var(--ink-2); margin: 0 0 32px; max-width: 60ch; }
+    .xp-areas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .area { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+    .area.ai { grid-column: 1 / -1; background: linear-gradient(135deg, var(--accent-soft), var(--surface) 70%); border-color: color-mix(in srgb, var(--accent) 25%, var(--line)); }
+    .area .k { display: flex; align-items: center; gap: 10px; font-weight: 600; margin-bottom: 8px; }
+    .area .k svg { width: 18px; height: 18px; color: var(--accent); flex: none; }
+    .area p { margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
+    .area .tags { margin-top: 0; }
+    @media (max-width: 860px) { .xp { grid-template-columns: 1fr; gap: 24px; } .xp-areas { grid-template-columns: 1fr; } }
+
+    .service .foot .muted { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-3); font-style: italic; }
+
+    /* ---------- Work ---------- */
+    .work { background: var(--surface); border-block: 1px solid var(--line); }
+    .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .project {
+      position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 22px;
+      padding: 32px; display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .project:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }
+    .project.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+    .badge {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent);
+    }
+    .project h3 { font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.05; letter-spacing: -.015em; margin: 0 0 6px; }
+    .project .kind { color: var(--ink-3); font-size: 14px; margin-bottom: 18px; }
+    .project p { color: var(--ink-2); margin: 0 0 22px; }
+    .project ul { margin: 0 0 24px; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .project li { color: var(--ink-2); font-size: 15px; padding-left: 20px; position: relative; }
+    .project li::before { content: ""; position: absolute; left: 2px; top: .7em; width: 8px; height: 1px; background: var(--accent); }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .tag { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink-2); }
+
+    .model-viz {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px;
+      font-family: var(--mono); font-size: 13px;
+    }
+    .msg { background: var(--surface-2); border-radius: 12px 12px 12px 4px; padding: 12px 14px; color: var(--ink-2); font-family: var(--sans); font-size: 14px; }
+    .flow { display: grid; gap: 10px; margin-top: 16px; }
+    .step { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 10px; }
+    .step b { font-weight: 500; color: var(--ink); }
+    .step span { color: var(--ink-3); font-size: 12px; }
+    .verdict { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 10px; background: #fbe9e7; color: #a3321f; font-weight: 500; }
+    :root[data-theme="dark"] .verdict { background: #3a1d1a; color: #ff9c8a; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .verdict { background: #3a1d1a; color: #ff9c8a; } }
+
+    @media (max-width: 860px) {
+      .projects { grid-template-columns: 1fr; }
+      .project.featured { grid-column: auto; grid-template-columns: 1fr; gap: 24px; }
+      .project { padding: 24px; }
+    }
+
+    /* ---------- Services ---------- */
+    .services { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .service { border: 1px solid var(--line); border-radius: 22px; padding: 36px; background: var(--surface); display: flex; flex-direction: column; }
+    .service .ic { width: 48px; height: 48px; border-radius: 14px; background: var(--ink); color: var(--bg); display: grid; place-items: center; margin-bottom: 28px; }
+    .service .ic svg { width: 22px; height: 22px; }
+    .service h3 { font-size: 22px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 10px; }
+    .service p { color: var(--ink-2); margin: 0 0 24px; }
+    .service ul { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
+    .service li { display: flex; gap: 10px; align-items: center; font-size: 15px; }
+    .service li svg { width: 16px; height: 16px; color: var(--accent); flex: none; }
+    .service .foot { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; color: var(--ink-3); }
+    .link { display: inline-flex; gap: 6px; align-items: center; color: var(--ink); font-weight: 500; font-size: 14px; }
+    .link svg { width: 14px; height: 14px; transition: transform .15s; }
+    .link:hover svg { transform: translate(2px, -2px); }
+    @media (max-width: 860px) { .services { grid-template-columns: 1fr; } .service { padding: 26px; } }
+
+    /* ---------- Certificates ---------- */
+    .certs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .cert { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; cursor: zoom-in; text-align: left; padding: 0; font: inherit; color: inherit; transition: transform .25s, box-shadow .25s; }
+    .cert:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .cert-img { aspect-ratio: 4/3; background: var(--surface-2); padding: 14px; }
+    .cert-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+    .cert-body { padding: 18px 20px 20px; }
+    .cert-body .issuer { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+    .cert-body h4 { margin: 6px 0 4px; font-size: 16px; font-weight: 500; line-height: 1.35; }
+    .cert-body span { font-size: 13px; color: var(--ink-3); }
+    @media (max-width: 900px) { .certs { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .certs { grid-template-columns: 1fr; } }
+
+    .lightbox { position: fixed; inset: 0; background: rgba(10,9,12,.82); display: none; place-items: center; z-index: 100; padding: 24px; cursor: zoom-out; }
+    .lightbox.open { display: grid; }
+    .lightbox img { max-height: 88vh; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+
+    /* ---------- Contact ---------- */
+    .contact-card {
+      background: var(--ink); color: var(--bg); border-radius: 32px; padding: 72px 64px;
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; position: relative; overflow: hidden;
+    }
+    .contact-card::after {
+      content: ""; position: absolute; width: 520px; height: 520px; right: -160px; top: -200px; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%); opacity: .5; pointer-events: none;
+    }
+    .contact-card h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(42px, 6vw, 76px); line-height: 1; letter-spacing: -.03em; margin: 14px 0 20px; }
+    .contact-card h2 em { opacity: .6; }
+    .contact-card .eyebrow { color: color-mix(in srgb, var(--bg) 55%, transparent); }
+    .contact-card p { color: color-mix(in srgb, var(--bg) 70%, transparent); max-width: 40ch; margin: 0 0 32px; }
+    .contact-card .btn { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+    .channels { display: grid; gap: 10px; align-content: center; position: relative; z-index: 1; }
+    .channel {
+      display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px;
+      border: 1px solid color-mix(in srgb, var(--bg) 16%, transparent); transition: background .15s, border-color .15s;
+    }
+    .channel:hover { background: color-mix(in srgb, var(--bg) 8%, transparent); border-color: color-mix(in srgb, var(--bg) 30%, transparent); }
+    .channel .ic { width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--bg) 10%, transparent); display: grid; place-items: center; flex: none; }
+    .channel .ic svg { width: 18px; height: 18px; }
+    .channel .meta { flex: 1; min-width: 0; }
+    .channel .meta small { display: block; font-size: 12px; color: color-mix(in srgb, var(--bg) 55%, transparent); }
+    .channel .meta b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+    .channel > svg { width: 16px; height: 16px; opacity: .5; flex: none; }
+    @media (max-width: 900px) { .contact-card { grid-template-columns: 1fr; padding: 48px 28px; border-radius: 24px; } }
+
+    footer { padding: 36px 0 48px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--ink-3); }
+    footer a:hover { color: var(--ink); }
+  </style>
 </head>
+<body>
 
-<body id="Home" class=".container-xxl">
+  <!-- ================= NAV ================= -->
+  <nav class="nav" id="nav">
+    <div class="wrap">
+      <a href="#top" class="brand"><span class="brand-mark">J</span> Jhon Mark Egos</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <a href="#contact" class="btn sm">Let's talk</a>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
 
-    <header class="header-custom d-flex justify-content-between align-items-end px-5">
-        <div class="text-start">
-            <h1 class="text-white" id="visited-name"></h1>
+  <main id="top">
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div class="reveal">
+          <span class="status"><span class="dot"></span> Software Developer at ActiveSystems Software Inc.</span>
+          <h1>Building <em>secure</em>,<br>well-crafted<br>software.</h1>
+          <p class="intro">I'm Jhon Mark — a software developer with a background in Information Security. I build business software with Delphi, MySQL and Laravel, and I'm helping my team bring AI-assisted development into everyday work with Claude Code.</p>
+          <div class="hero-ctas">
+            <a href="#work" class="btn">View selected work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="mailto:jmcegos@gmail.com" class="btn ghost">jmcegos@gmail.com</a>
+          </div>
+          <div class="hero-meta">
+            <div><strong>BS Information Technology</strong>Major in Information Security · USeP</div>
+            <div><strong>2 years</strong>ActiveSystems Software Inc.</div>
+            <div><strong>ESTCON 2024</strong>Research presented, Malaysia</div>
+          </div>
         </div>
-        <div class="pb-3">
-            <a class="custom-text mx-2" href="#Home">Home</a>
-            <a class="custom-text mx-2" href="#Aboutme">About Me</a>
-            <a class="custom-text mx-2" href="#Certificates">Certificates</a>
-            <a class="custom-text mx-2" href="#Services">Services</a>
-            <a class="custom-text mx-2" href="#Experience">Experience</a>
+
+        <div class="portrait reveal">
+          <div class="portrait-frame">
+            <img src="picture.png" alt="Portrait of Jhon Mark Egos">
+          </div>
+          <div class="float-card fc-2">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><b>InfoSec-minded</b><span>Security first</span></div>
+          </div>
+          <div class="float-card fc-1">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+            <div><b>AI-assisted dev</b><span>Claude Code · MCP</span></div>
+          </div>
         </div>
+      </div>
     </header>
-    
-    <div class=" row mt-5 ">
 
-        <div id="Aboutme" class="col-12 col-sm-12 col-xl-8 text-start px-5 text-white ">
-            <h1 class="name text-center"><b>Jhon Mark Egos</b></h1>
-            <p class="aboutme"><b>
-                    Dynamic web developer with a Bachelor of Science in Information Technology, majoring in
-                    Information
-                    Security from the University of Southeastern Philippines (USeP). Skilled in Laravel, Bootstrap
-                    5, and
-                    JavaScript, with hands-on experience in developing secure and responsive web applications.
-                    Proficient in
-                    applying MVC architecture to create efficient and scalable solutions. Strong foundation in IT
-                    systems
-                    management and committed to continuous learning and improvement. Eager to contribute my
-                    technical
-                    expertise
-                    and enthusiasm to a forward-thinking organization.</b>
-            </p>
-            <h2><b>Hobbies & Interest</b></h5>
-                <ul class="list">
-                    <li>Study Programming</li>
-                    <li>Taekwondo</li>
-                    <li>Typing</li>
-                    <li>Anime</li>
-                </ul>
+    <!-- ================= STACK ================= -->
+    <div class="stack" aria-label="Technologies">
+      <div class="stack-track">
+        <span>Delphi</span><span>MySQL</span><span>Laravel</span><span>PHP</span><span>JavaScript</span><span>MVC Architecture</span><span>Design Patterns</span><span>Claude Code</span><span>MCP</span><span>Bootstrap 5</span><span>Pusher</span><span>BERT / NLP</span>
+        <span>Delphi</span><span>MySQL</span><span>Laravel</span><span>PHP</span><span>JavaScript</span><span>MVC Architecture</span><span>Design Patterns</span><span>Claude Code</span><span>MCP</span><span>Bootstrap 5</span><span>Pusher</span><span>BERT / NLP</span>
+      </div>
+    </div>
 
-                <a href="#Contact" class="contact p-2 bg-white rounded-4 "><i class="fa-solid fa-circle"
-                        style="color: #542c5c;"></i><span class="px-4">Contact</span></a>
+    <!-- ================= ABOUT ================= -->
+    <section id="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="eyebrow">About</div>
+          <h2 class="title">Developer by craft,<br><em>security</em> by training.</h2>
+        </div>
+        <div class="about-body reveal">
+          <p>I'm a software developer with a Bachelor of Science in Information Technology, majoring in Information Security, from the University of Southeastern Philippines.</p>
+          <p>For the past two years I've worked at ActiveSystems Software Inc., building business software with Delphi and MySQL alongside Laravel and MVC. I read widely on software design — Design Patterns among others — and I'm part of my team's work adopting Claude Code with custom skills, workflows and MCP integrations.</p>
+          <div class="facts">
+            <div class="fact">
+              <div class="k">Education</div>
+              <div class="v">BS Information Technology<small>Major in Information Security — USeP</small></div>
+            </div>
+            <div class="fact">
+              <div class="k">Currently</div>
+              <div class="v">ActiveSystems Software Inc.<small>Software Developer · 2 years</small></div>
+            </div>
+            <div class="fact" style="grid-column: 1 / -1;">
+              <div class="k">Reading</div>
+              <div class="chips">
+                <span class="chip">Design Patterns</span>
+                <span class="chip">Software architecture</span>
+                <span class="chip">Clean, maintainable code</span>
+              </div>
+            </div>
+            <div class="fact" style="grid-column: 1 / -1;">
+              <div class="k">Outside of work</div>
+              <div class="chips">
+                <span class="chip">Studying programming</span>
+                <span class="chip">Taekwondo</span>
+                <span class="chip">Speed typing</span>
+                <span class="chip">Anime</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Experience</div>
+            <h2 class="title">Where I'm <em>building</em> now.</h2>
+          </div>
+          <p class="lede">Two years of professional work on production business software — and on how our team builds it.</p>
         </div>
 
-        <div class="col-12 col-sm-12 col-xl-4 mt-5 text-center align-content-center">
-            <img src="picture.png" alt="Profile Picture" class="shadow img-fluid rounded-circle mb-3"
-                style="width: 500px; height: 500px;">
+        <div class="xp reveal">
+          <div class="xp-side">
+            <div class="when">2024 — Present · 2 yrs</div>
+            <div class="co">ActiveSystems Software Inc.</div>
+            <div class="role">Software Developer</div>
+            <div class="now"><span class="dot"></span> Current role</div>
+          </div>
+          <div class="xp-main">
+            <p>Developing and maintaining business software, deepening my skills across desktop, database and web — and helping lead our team's adoption of AI-assisted development.</p>
+            <div class="xp-areas">
+              <div class="area">
+                <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Delphi development</div>
+                <p>Building and maintaining desktop application features in Delphi.</p>
+                <div class="tags"><span class="tag">Delphi</span><span class="tag">Object Pascal</span></div>
+              </div>
+              <div class="area">
+                <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>MySQL, sharpened</div>
+                <p>Writing and optimizing queries against large production databases.</p>
+                <div class="tags"><span class="tag">MySQL</span><span class="tag">Query tuning</span></div>
+              </div>
+              <div class="area">
+                <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>Laravel &amp; MVC</div>
+                <p>Web development with cleaner architecture and a stronger grasp of MVC.</p>
+                <div class="tags"><span class="tag">Laravel</span><span class="tag">MVC</span></div>
+              </div>
+              <div class="area">
+                <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>Software design</div>
+                <p>Applying ideas from Design Patterns and other engineering books to real code.</p>
+                <div class="tags"><span class="tag">Design Patterns</span><span class="tag">OOP</span></div>
+              </div>
+              <div class="area ai">
+                <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>AI innovation with Claude Code</div>
+                <p>Part of the team bringing Claude Code into our development process — building custom skills, multi-step workflows and MCP server integrations that connect AI to our own tools and data.</p>
+                <div class="tags"><span class="tag">Claude Code</span><span class="tag">Skills</span><span class="tag">Workflows</span><span class="tag">MCP</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section id="work" class="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Selected work</div>
+            <h2 class="title">Projects that <em>replaced paper</em><br>and caught threats.</h2>
+          </div>
+          <p class="lede">A selection of systems I've designed and built — from research-grade machine learning to everyday business tools.</p>
         </div>
 
-
-        <div id="Certificates" class="d-flex justify-content-center" style="margin-top: 300px; margin-bottom: 300px;">
-            <div id="carouselExampleCaptions" class="carousel slide " style="width: 700px; height: 500px;"
-                data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+        <div class="projects">
+          <!-- Featured -->
+          <article class="project featured reveal">
+            <div>
+              <div class="project-top"><span class="num">01 — Research</span><span class="badge">Presented · ESTCON 2024</span></div>
+              <h3>SMSegurado</h3>
+              <div class="kind">Mobile application · Smishing detection</div>
+              <p>A mobile app that detects smishing (SMS phishing) attacks using BERT language models. Recognized and showcased at ESTCON 2024 in Malaysia, September 11–13, 2024.</p>
+              <ul>
+                <li>mBERT automatically scans every incoming message for threats</li>
+                <li>DistilBERT performs a detailed second-pass re-scan of the text</li>
+                <li>Two-stage pipeline balances speed with accuracy</li>
+              </ul>
+              <div class="tags"><span class="tag">mBERT</span><span class="tag">DistilBERT</span><span class="tag">NLP</span><span class="tag">Mobile</span></div>
+            </div>
+            <div class="model-viz" aria-hidden="true">
+              <div class="msg">"Your account is on hold. Verify now at bit.ly/xx-bank to avoid suspension."</div>
+              <div class="flow">
+                <div class="step"><b>① mBERT</b><span>auto-scan on receive</span></div>
+                <div class="step"><b>② DistilBERT</b><span>detailed re-scan</span></div>
+                <div class="verdict">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+                  Flagged as smishing
                 </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" style="width: 500px; height: 500px;" src="ZUITT.png"
-                            alt="DICT-WD002 Using HTML and CSS to Design a Website">
-                        <div class="carousel-caption d-none d-md-block">
-
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" style="width: 500px; height: 500px;" src="DICT-WD001.png"
-                            alt="DICT-WD002 Using HTML and CSS to Design a Website">
-                        <div class="carousel-caption d-none d-md-block">
-
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" style="width: 500px; height: 500px;" src="DICT-WD002.png"
-                            alt="DICT-WD002 Using HTML and CSS to Design a Website">
-                        <div class="carousel-caption d-none d-md-block">
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon " aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+              </div>
             </div>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-top"><span class="num">02 — Government</span></div>
+            <h3>Profiling &amp; Monitoring System</h3>
+            <div class="kind">DSWD – RSCC XI</div>
+            <p>A data-collection system that eliminates paper-based operations for monitoring children's adoption and foster-care data, supporting policy development and program management.</p>
+            <ul>
+              <li>Tracks adoption milestones and lengths of time in process</li>
+              <li>Records foster-care entries, exits, ages and time in care</li>
+              <li>Centralized, more secure database</li>
+            </ul>
+            <div class="tags"><span class="tag">Web app</span><span class="tag">Data collection</span><span class="tag">Reporting</span></div>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-top"><span class="num">03 — Business</span></div>
+            <h3>Human Resource Management System</h3>
+            <div class="kind">Web platform · 3 user roles</div>
+            <p>An HR platform for Super Admins, Admins and Employees — covering records, attendance, leave and notifications, with an analytics dashboard.</p>
+            <ul>
+              <li>Clock-in/out timesheets and leave credit tracking</li>
+              <li>Real-time notifications for events, renewals and meetings</li>
+              <li>Dashboard for demographics, turnover, retention and growth</li>
+            </ul>
+            <div class="tags"><span class="tag">Laravel</span><span class="tag">Pusher</span><span class="tag">Snappy PDF</span><span class="tag">Scheduler</span></div>
+          </article>
+
+          <article class="project reveal" style="grid-column: 1 / -1;">
+            <div class="project-top"><span class="num">04 — Education</span></div>
+            <h3>Enrollment System</h3>
+            <div class="kind">Admin portal</div>
+            <p>A centralized platform for admins to monitor and manage student records, with bulk import/export and status updates that streamline student management.</p>
+            <div class="tags"><span class="tag">Laravel</span><span class="tag">Maatwebsite Excel</span><span class="tag">Import / Export</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Services</div>
+            <h2 class="title">How I can <em>help</em>.</h2>
+          </div>
+          <p class="lede">Available for freelance work — from building your next web application to keeping your machines running.</p>
         </div>
 
+        <div class="services">
+          <div class="service reveal">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+            <h3>Freelance Web Development</h3>
+            <p>Custom web applications built with modern, maintainable tooling and security in mind from day one.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Laravel / PHP back-ends with MVC architecture</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Responsive front-ends — HTML, CSS, JS, Bootstrap 5</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dashboards, reports and data import/export</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Desktop applications in Delphi with MySQL</li>
+            </ul>
+            <div class="foot"><span>Laravel · Delphi · MySQL · JS</span><a href="#contact" class="link">Start a project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+          </div>
 
-        <div id="Services" class="col-12 col-sm-12 col-xl-6 text-center">
-            <img src="Code.png" alt="Coding LOGO" class="img-fluid  mb-3" style="width: 300px; height: 300px;">
-            <h2 class="text-white">Freelance IT Programming</h2>
-            <div class="col-12 col-sm-12 col-xl-12 mt-5">
-                <a href="https://laravel.com/"><img src="LARAVEL.png" alt="LARAVEL LOGO" class="mx-3 img-fluid  mb-3"
-                        style="width: 100px; height: 100px;"></a>
-                <a href="https://www.w3schools.com/js/default.asp"><img src="JS.png" alt="JS LOGO"
-                        class="mx-3 img-fluid  mb-3" style="width: 100px; height: 100px;"></a>
-                <a href="https://www.w3schools.com/html/default.asp"><img src="HTML.png" alt="HTML LOGO"
-                        class="mx-3 img-fluid  mb-3" style="width: 100px; height: 100px;"></a>
-                <a href="https://www.w3schools.com/css/default.asp"><img src="CSS.png" alt="CSS LOGO"
-                        class="mx-3 img-fluid  mb-3" style="width: 100px; height: 100px;"></a>
-                <a href="https://getbootstrap.com/"><img src="BOOTRSTRAP.png" alt="BOOTSTRAP LOGO"
-                        class="mx-3 img-fluid  mb-3" style="width: 100px; height: 100px;"></a>
-            </div>
+          <div class="service reveal">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+            <h3>Freelance IT Technician</h3>
+            <p>Hands-on support for computers and IT systems, previously offered through Hytek Service — diagnosis, repair and setup.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hardware troubleshooting and repair</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>System setup and maintenance</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>IT systems management</li>
+            </ul>
+            <div class="foot"><span>Hytek Service</span><span class="muted">Facebook page no longer active</span></div>
+          </div>
         </div>
-        <div class="technician col-12 col-sm-12 col-xl-6 text-center">
-            <img src="Tech.png" alt="Technician Logo" class="img-fluid  mb-3" style="width: 300px; height: 300px;">
-            <h2 class="text-white">Freelance IT Technician</h2>
-            <div class="col-12 col-sm-12 col-xl-12 mt-5">
-                <a href="https://www.facebook.com/HytekService"><img src="facebook.png" alt="HytekService Page"
-                        class="mx-3 img-fluid  mb-3" style="width: 100px; height: 100px;">
-                    <span class="text-white fs-3"><b>https://www.facebook.com/HytekService</b></span></a>
-            </div>
+      </div>
+    </section>
+
+    <!-- ================= CERTIFICATES ================= -->
+    <section id="certificates" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Certificates</div>
+            <h2 class="title">Always <em>learning</em>.</h2>
+          </div>
+          <p class="lede">Training and certifications in web development. Click any certificate to view it full size.</p>
         </div>
+        <div class="certs">
+          <button class="cert reveal" data-src="DICT-WD001.png">
+            <div class="cert-img"><img src="DICT-WD001.png" alt="DICT-WD001 certificate" loading="lazy"></div>
+            <div class="cert-body"><div class="issuer">DICT · ILCDB</div><h4>DICT-WD001 Principles of Web Development and Introduction to HTML</h4><span>Certificate of Completion · July 2024</span></div>
+          </button>
+          <button class="cert reveal" data-src="DICT-WD002.png">
+            <div class="cert-img"><img src="DICT-WD002.png" alt="DICT-WD002 certificate" loading="lazy"></div>
+            <div class="cert-body"><div class="issuer">DICT · ILCDB</div><h4>DICT-WD002 Using HTML and CSS to Design a Website</h4><span>Certificate of Completion</span></div>
+          </button>
+          <button class="cert reveal" data-src="ZUITT.png">
+            <div class="cert-img"><img src="ZUITT.png" alt="Zuitt certificate" loading="lazy"></div>
+            <div class="cert-body"><div class="issuer">Zuitt × DICT Region XI</div><h4>Basic Web Profile Coding Workshop</h4><span>Certificate of Participation · Aug 2022</span></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="contact-card reveal">
+          <div style="position: relative; z-index: 1;">
+            <div class="eyebrow">Contact</div>
+            <h2>Have a project<br>in mind? <em>Let's talk.</em></h2>
+            <p>I'm open to freelance work and new opportunities. Send a message and I'll get back to you as soon as I can.</p>
+            <a href="mailto:jmcegos@gmail.com" class="btn">Send an email
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+          <div class="channels">
+            <a class="channel" href="mailto:jmcegos@gmail.com">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span>
+              <span class="meta"><small>Email</small><b>jmcegos@gmail.com</b></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </a>
+            <a class="channel" href="tel:+639942276521">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+              <span class="meta"><small>Phone</small><b>0994 227 6521</b></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </a>
+            <a class="channel" href="https://www.fb.com/jhonmarkcaubaegos/" target="_blank" rel="noopener">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.7.2-1.5 1.5-1.5H17V2h-2.6C11.6 2 11 4 11 5.9V8H9v3h2v11h3V11h2.6l.4-3z"/></svg></span>
+              <span class="meta"><small>Facebook</small><b>/jhonmarkcaubaegos</b></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </a>
+            <a class="channel" href="https://www.instagram.com/jmcegos/" target="_blank" rel="noopener">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></span>
+              <span class="meta"><small>Instagram</small><b>@jmcegos</b></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="year"></span> Jhon Mark Egos</span>
+      <a href="#top">Back to top ↑</a>
     </div>
-    <div id="Experience" class="expercience col-12 col-sm-12 col-xl-12 ">
-        <div class="d-flex justify-content-between text-white">
-            <div class="  col-xl-6 ">
-            </div>
-            <div class="col-12 col-sm-12 col-xl-6  ">
-                <h3 class="border-bottom">Profiling and Monitoring System</h3>
-                <p class="details"><b>
-                        For assisting policy development and program management of DSWD – RSCC XI – this is a data
-                        collection system which primarily aims to eliminate a manual or paper-based operations mainly
-                        for the monitoring of the children’s adoption and foster care related data. This also adds up a
-                        more secured database. The adoption data, includes race/ethnicity of those adopted as well as
-                        lengths of time to important milestones in the adoption process. On the other hand, foster care
-                        data refers to the number of children entering and exiting foster care – their ages,
-                        race/ethnicity, and associated lengths of time in care.</b>
-                </p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between text-white">
-            <div class="col-12 col-sm-12 col-xl-6 ">
-                <h3 class="border-bottom">SMSegurado: Mobile Application</h3>
-                <p class="details"><b>
-                        SMSegurado is a mobile application designed to detect smishing attacks in SMS content using a
-                        BERT model. The app employs two models: the first, mBERT, automatically scans incoming messages
-                        to identify potential smishing threats, while the second, DistilBERT, performs a more detailed
-                        re-scan of the text content. This innovative project has gained recognition and will be
-                        showcased at ESTCON 2024, taking place in Malaysia from September 11–13, 2024, under the
-                        guidance of our advisor.</b>
-                </p>
-            </div>
-            <div class=" col-xl-6  ">
+  </footer>
 
-            </div>
-        </div>
-        <div class="d-flex justify-content-between text-white">
-            <div class=" col-xl-6 ">
-            </div>
-            <div class="col-12 col-sm-12 col-xl-6  ">
-                <h3 class="border-bottom">Human Resource Management System</h3>
-                <p class="details"><b>
-                        The Human Resource Management System (HRMS) is a web-based platform designed to optimize HR
-                        processes, supporting three user roles: Super Admin, Admin, and Employee. Built with Dom Snappy
-                        composer, PUSHER for real-time notifications, and a time scheduler, the system allows Admins to
-                        manage employee records by adding, updating, and removing personal and employment details. They
-                        can also track attendance through clock-in and clock-out timesheets, update leave records such
-                        as credits and balances, notify employees about celebrations, contract renewals, events, and
-                        meetings, and generate reports on employee data, leave summaries, and attendance. The Super
-                        Admin module features a data analytics dashboard that displays employee demographics, turnover
-                        and retention rates, and growth rates. Employee users can update personal information, view
-                        attendance records, clock-in and clock-out, check leave balances, and receive notifications. The
-                        system will be tested for functionality, reliability, and usability to ensure optimal
-                        performance.</b>
-                </p>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between text-white">
-            <div class="col-12 col-sm-12 col-xl-6 ">
-                <h3 class="border-bottom">Enrollment System</h3>
-                <p class="details"><b>
-                        The Enrollment System is designed exclusively for admin users, enabling them to monitor student
-                        records efficiently. It includes functionality for exporting and importing data using
-                        Maatwebsite and allows admins to update the status of student records as needed. This system
-                        streamlines student management by providing a centralized platform for data handling and status
-                        updates.</b>
-                </p>
-            </div>
-            <div class="  col-xl-6  ">
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Certificate preview"><img alt=""></div>
 
-            </div>
-        </div>
+  <script>
+    // Theme toggle (remembered per browser)
+    const root = document.documentElement;
+    try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    });
 
-    </div>
-    <div id="Contact" class="info col-12  col-xl-12 d-flex justify-content-center ">
-        <div class=" d-flex flex-column fs-2  p-2">
-            <a class="text-center text-white" href="https://www.fb.com/jhonmarkcaubaegos/"> <img src="facebook.png"
-                    alt="Facebook Account" class="img-fluid  mb-3 mx-2"
-                    style="width: 150px; height: 150px;"><span>https://www.fb.com/jhonmarkcaubaegos/</span></a>
-            <a class="text-center text-white" href="https://www.instagram.com/jmcegos/"> <img src="INSTAGRAM.png"
-                    alt="Instagram Account" class="img-fluid  mb-3 mx-2"
-                    style="width: 150px; height: 150px;"><span>https://www.instagram.com/jmcegos/</span></a>
-            <a class="text-center text-white" href="https://www.gmail.com"> <img src="GMAIL.png" alt="Gmail Account"
-                    class="img-fluid  mb-3 mx-2" style="width: 150px; height: 150px;"><span>jmcegos@gmail.com</span></a>
-            <a class="text-center text-white"> <img src="TELEPHONE.png" alt="Phone Number"
-                    class="img-fluid  mb-3 mx-2" style="width: 150px; height: 150px;"><span>09942276521</span></a>
-        </div>
+    // Mobile menu
+    const links = document.getElementById('navLinks');
+    document.getElementById('menuBtn').addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 
-    </div>
+    // Nav border on scroll
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
 
-    <!-- Example of Font Awesome icons -->
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    </div>
-    <!-- Bootstrap 5 JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    // Certificate lightbox
+    const lb = document.getElementById('lightbox');
+    document.querySelectorAll('.cert').forEach(c => c.addEventListener('click', () => {
+      lb.querySelector('img').src = c.dataset.src; lb.classList.add('open');
+    }));
+    lb.addEventListener('click', () => lb.classList.remove('open'));
+    addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
 
-    <!-- Font Awesome JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
-    <script src="script.js"></script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
-
 </html>
